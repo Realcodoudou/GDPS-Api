@@ -6,5 +6,5 @@ except:
 	os.system("pip install pymysql") # Installs the required libs if not installed
 def login(host,user,pw):
 	connection = pymysql.connect(host="{host}",user=f"{user}",passwd=f"{pw}",database=f"{user}") # Connects to the database
-  cursor = connection.cursor() # Gets the cursor
+        cursor = connection.cursor() # Gets the cursor
 	return connection,cursor # Returns the tuple
