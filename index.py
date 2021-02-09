@@ -5,7 +5,7 @@ try:
 except:
     os.system("pip install pymysql") # Installs the required libs if not installed
 def login(host,user,pw):
-    connection = pymysql.connect(host="{host}",user=f"{user}",passwd=f"{pw}",database=f"{user}") # Connects to the database
+    connection = pymysql.connect(host="f{host}",user=f"{user}",passwd=f"{pw}",database=f"{user}") # Connects to the database
     cursor = connection.cursor() # Gets the cursor
     return connection,cursor # Returns the tuple
 def banuser(connection,cursor,user):
