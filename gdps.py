@@ -1,6 +1,7 @@
 import os # Imports the os lib. Used to install the required libs if not installed
 # Checking if libs are installed or not
 import math
+import datetime,base64
 from urllib.request import urlopen,Request 
 url = ""
 try:
@@ -38,9 +39,7 @@ def profile(connection,cursor,user):
     def users(user,url):
               Thing= []
               url = f"{url}/getGJUserInfo20.php" 
-              print("ok")
               p = f"targetAccountID={user}&secret=Wmfd2893gb7" 
-              print("ok")
               p = p.encode() 
               data = urlopen(url,p).read().decode()
               if data == "-1": 
@@ -95,5 +94,53 @@ def profile(connection,cursor,user):
                 break
     if Things == False:
         return "User doesn't exist."
+    else:
+        return Response
+def level(connection,cursor,level:int):
+    LevelExists = False
+    script = "SELECT * FROM `levels`"
+    cursor.execute(script)
+    rows = cursor.fetchall()
+    for row in rows:
+            if row[3] == level:
+                LvlPass = str(row[10])
+                LvlPass = LvlPass[1:]
+                Objects = int(row[14])
+                Stars = int(row[26])
+                Song = int(row[13])
+                Length = int(row[7])
+                if Length == 0:
+                        Length = "Tiny"
+                elif Length == 1:
+                        Length = "Short"
+                elif Length == 2:
+                        Length = "Medium"
+                elif Length == 3:
+                        Length = "Long"
+                elif Length == 4:
+                        Length = "XL"
+                UploadDate = int(row[27])
+                UploadDate = datetime.datetime.fromtimestamp(UploadDate)
+                UploadDate = f"{UploadDate.strftime('%m')}/{UploadDate.strftime('%d')}/{UploadDate.strftime('%Y')}"
+                ReuploadOrNot = int(row[38])
+                Thing = bytes(row[5],'utf-8')
+                DecodedDesc = base64.b64decode(Thing).decode()
+                Things = True
+                Response = {
+                    "levelpass": LvlPass,
+                    "Objects": Objects,
+                    "Stars": Stars,
+                    "Length": Length,
+                    "SongId": Song,
+                    "UploadDate": UploadDate,
+                    "Reuploaded": bool(ReuploadOrNot),
+                    "Desc": DecodedDesc,
+                    "Downloads": row[22],
+                    "Author": row[2],
+                    "Likes": row[23],
+                    "Coins": row[15],
+                }
+    if not Things == True:
+        return "Level doesn't exist."
     else:
         return Response
