@@ -88,7 +88,8 @@ def profile(connection,cursor,user):
                     "rank": RankLb,
                     "mod": Mod,
                     "friends": Friends,
-                    "accid": acccid
+                    "accid": acccid,
+                    "Username": user
                 }
                 Things = True
                 break
@@ -138,7 +139,8 @@ def level(connection,cursor,level:int):
                     "Downloads": row[22],
                     "Author": row[2],
                     "Likes": row[23],
-                    "Coins": row[15]
+                    "Coins": row[15],
+                    "Name": row[4]
                 }
     if not Things == True:
         return "Level doesn't exist."
