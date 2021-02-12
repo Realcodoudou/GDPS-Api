@@ -13,7 +13,7 @@ cursor = logindata[1]
 gdps.seturl("Url to the server (or a place with a bunch of php files including getGJScores20.php)")
 user = gdps.profile(connection,cursor,"codoudou") # Should print a json string if you did everything correct
 print(user) # Prints the json table
-print(f"{user['Username']} has {user['stars']} Stars.) # Codoudou has 150 stars
+print(f"{user['Username']} has {user['stars']} Stars.") # Codoudou has 150 stars
 # Fetching level stats
 level = gdps.level(connection,cursor,214)
 print(level) # Prints the entire json table
