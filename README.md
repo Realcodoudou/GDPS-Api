@@ -2,14 +2,20 @@
 
 GDPS-Api is an api where you can fetch/manage your gdps using python
 
-Here is a simple example of how to login to your database and get the profile stats info
+Examples:
 
 ```py
 # Fetching profile stats
-import o
-logindata=o.login("Your domain","your entire database username here","your database password here")
+import gdps
+logindata=gdps.login("Your domain","your entire database username here","your database password here")
 connection = logindata[0]
 cursor = logindata[1]
-o.seturl("Url to the server (or a place with a bunch of php files including getGJScores20.php)")
-print(o.profile(connection,cursor,"codoudou")) # Should print a json string if you did everything correct
+gdps.seturl("Url to the server (or a place with a bunch of php files including getGJScores20.php)")
+user = gdps.profile(connection,cursor,"codoudou") # Should print a json string if you did everything correct
+print(user) # Prints the json table
+print(f"{user['Username']} has {user['stars']} Stars.) # Codoudou has 150 stars
+# Fetching level stats
+level = gdps.level(connection,cursor,214)
+print(level) # Prints the entire json table
+print(f"{level['Name']} has {level['Downloads']} Downloads.") # A d1fferent w0rld has 21 Downloads.
 ```
