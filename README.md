@@ -2,7 +2,7 @@
 
 GDPS-Api is an api where you can fetch/manage your gdps using python
 
-Example:
+Here is a simple example of how to login to your database and get the profile stats info
 
 ```py
 # Fetching profile stats
