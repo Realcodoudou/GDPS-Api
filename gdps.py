@@ -4,6 +4,7 @@ import math
 import datetime, base64, pymysql
 from urllib.request import urlopen
 
+# switch to classes soon instead of dicts
 
 class GDPSApi:
     def __init__(self, url: str=""):
@@ -44,7 +45,7 @@ class GDPSApi:
                             WHERE `userName` = %s;""", username)
         self.conn.commit()
 
-    def profile(self, username: str):
+    def get_user(self, username: str):
         # this entire function needs to be rewritten with pep-8 standards and better code
         def users(user,url):
             Thing= []
