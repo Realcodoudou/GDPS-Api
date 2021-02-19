@@ -4,8 +4,6 @@ import base64
 import pymysql
 from urllib.request import urlopen
 
-# switch to classes soon instead of dicts
-
 class GDPSApi:
     def __init__(self, url: str = ""):
         self.url = url
@@ -14,8 +12,13 @@ class GDPSApi:
         self.url = url  # short for GDPSApi().url = ""
 
     def connect_db(self, host: str, user: str, password: str):
-        # TODO: use async
-        # Connects to the database
+        """ 
+        Usage: Connects to the database.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        """
         conn = pymysql.connect(host=host, user=user,
                                passwd=password, database=user)
         cursor = conn.cursor()  # Gets the cursor
@@ -24,31 +27,70 @@ class GDPSApi:
         self.cursor = cursor
 
     def ban_user(self, username: str):
+        """ 
+        Usage: Bans user from the leaderboard.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        gdps.ban_user("codoudou")
+        """
         self.cursor.execute("""UPDATE `users`
                             SET `isBanned` = '1'
                             WHERE `userName` = %s;""", username)  # no unsafe formats
         self.conn.commit()
 
     def unban_user(self, username: str):
+        """ 
+        Usage: Unbans user from the leaderboard.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        gdps.unban_user("codoudou")
+        """
         self.cursor.execute("""UPDATE `users`
                        SET `isBanned` = '0'
                        WHERE `userName` = %s;""", username)
         self.conn.commit()
 
     def creator_ban_user(self, username: str):
+        """ 
+        Usage: Bans user from the creators leaderboard.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        gdps.creator_ban_user("codoudou")
+        """
         self.cursor.execute("""UPDATE `users`
                             SET `isCreatorBanned` = '1'
                             WHERE `userName` = %s;""", username)
         self.conn.commit()
 
     def creator_unban_user(self, username: str):
+        """ 
+        Usage: Unbans user from the creators leaderboard.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        gdps.creator_unban_user("codoudou")
+        """
         self.cursor.execute("""UPDATE `users`
                             SET `isCreatorBanned` = '0'
                             WHERE `userName` = %s;""", username)
         self.conn.commit()
 
     def get_user(self, username: str):
-        # this entire function needs to be rewritten with pep-8 standards and better code
+        """ 
+        Usage: Fetches user info.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        print(gdps.get_user("codoudou")) # Prints the response
+        """
         def users(user, url):
             Thing = []
             url = f"{url}/getGJUserInfo20.php"
@@ -112,7 +154,14 @@ class GDPSApi:
             return Response
 
     def get_level(self, level: int):
-        # this entire function needs to be rewritten with pep-8 standards and better code
+        """ 
+        Usage: Fetches level info.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        print(gdps.get_level(214)) # Prints the response
+        """
         LevelExists = False
         script = "SELECT * FROM `levels`"
         self.cursor.execute(script)
@@ -161,7 +210,14 @@ class GDPSApi:
             return "Level doesn't exist."
         else:
             return Response
-    def createaccount(self,username,pw):
+    def create_account(self,username,pw):
+        """ 
+        Usage: Creates an account.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        print(gdps.create_account("Hello_World","Password123456")) # Prints the response (If the response is 1,1 then it means that it worked)
+        """
         url = f"{self.url}/accounts/registerGJAccount.php" 
         p = f"userName={username}&password={pw}&email=nah@nah.f"
         p = p.encode() 
@@ -170,8 +226,17 @@ class GDPSApi:
         p = f"udid=nz&userName={username}&password={pw}"
         p = p.encode() 
         data1 = urlopen(url,p).read().decode()
-        return data1
-    def getGauntlet(self,gauntlet):
+        return data,data1
+    def get_gauntlet(self,gauntlet):
+        """ 
+        Usage: Fetches a gauntlet's levels.
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.connect_db("example.com","user","password")
+        print(gdps.get_gauntlet("fire")) # Prints the response
+        """
+        Response = "Gauntlet doesn't exist."
         def nametogauntlettype(name:str):
             if name.lower() == "fire":
                 return 1
