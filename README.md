@@ -22,5 +22,5 @@ print(f"{user['Username']} has {user['stars']} Stars.") # Codoudou has 150 stars
 level = gdps.get_level(214) # level id is 213
 
 print(level) # print the dict
-print(level["Downloads"]) # A d1fferent w0rld has 21 Downloads.
+print(f"{level["Name"]} has {level["Downloads"]} Downloads.") # A d1fferent w0rld has 21 Downloads.
 ```
