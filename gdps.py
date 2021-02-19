@@ -157,7 +157,67 @@ class GDPSApi:
                     "Coins": row[15],
                     "Name": row[4]
                 }
-        if not Things == True:
-            return "Level doesn't exist."
-        else:
-            return Response
+    if not Things == True:
+        return "Level doesn't exist."
+    else:
+        return Response
+    def createaccount(self,username,pw):
+        url = f"{self.url}/accounts/registerGJAccount.php" 
+        p = f"userName={username}&password={pw}&email=nah@nah.f"
+        p = p.encode() 
+        data = urlopen(url,p).read().decode()
+        url = f"{self.url}/accounts/loginGJAccount.php" 
+        p = f"udid=nz&userName={username}&password={pw}"
+        p = p.encode() 
+        data1 = urlopen(url,p).read().decode()
+        return data1
+    def getGauntlet(self,gauntlet):
+        def nametogauntlettype(name:str):
+            if name.lower() == "fire":
+                return 1
+            elif name.lower() == "ice":
+                return 2
+            elif name.lower() == "poison":
+                return 3
+            elif name.lower() == "shadow":
+                return 4
+            elif name.lower() == "lava":
+                return 5
+            elif name.lower() == "bonus":
+                return 6
+            elif name.lower() == "chaos":
+                return 7
+            elif name.lower() == "demon":
+                return 8
+            elif name.lower() == "time":
+                return 9
+            elif name.lower() == "crystal":
+                return 10
+            elif name.lower() == "magic":
+                return 11
+            elif name.lower() == "spike":
+                return 12
+            elif name.lower() == "monster":
+                return 13
+            elif name.lower() == "doom":
+                return 14
+            elif name.lower() == "death":
+                return 15
+            elif name.lower() == "unknown":
+                return 16
+            else:
+                return 100
+        script = "SELECT * FROM `gauntlets`"
+        self.cursor.execute(script)
+        rows =self.cursor.fetchall()
+        for row in rows:
+            if row[0] == nametogauntlettype(gauntlet):
+                Response = {
+                    "Level 1": row[1],
+                    "Level 2": row[2],
+                    "Level 3": row[3],
+                    "Level 4": row[4],
+                    "Level 5": row[5]
+                }
+                break
+        return Response
