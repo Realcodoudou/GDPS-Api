@@ -157,10 +157,10 @@ class GDPSApi:
                     "Coins": row[15],
                     "Name": row[4]
                 }
-    if not Things == True:
-        return "Level doesn't exist."
-    else:
-        return Response
+        if not Things == True:
+            return "Level doesn't exist."
+        else:
+            return Response
     def createaccount(self,username,pw):
         url = f"{self.url}/accounts/registerGJAccount.php" 
         p = f"userName={username}&password={pw}&email=nah@nah.f"
