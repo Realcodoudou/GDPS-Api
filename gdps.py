@@ -4,12 +4,21 @@ import base64
 import pymysql
 from urllib.request import urlopen
 
+# switch to classes soon instead of dicts
+
 class GDPSApi:
     def __init__(self, url: str = ""):
         self.url = url
 
     def set_url(self, url: str):
-        self.url = url  # short for GDPSApi().url = ""
+        """
+        Usage: Changes the url of the server. (short for GDPSApi().url = "")
+        Example:
+        from gdps import GDPSApi
+        gdps = GDPSApi("http://www.example.com")
+        gdps.set_url("https://www.newurl.com")
+        """
+        self.url = url
 
     def connect_db(self, host: str, user: str, password: str):
         """ 
@@ -216,7 +225,7 @@ class GDPSApi:
         Example:
         from gdps import GDPSApi
         gdps = GDPSApi("http://www.example.com")
-        print(gdps.create_account("Hello_World","Password123456")) # Prints the response (If the response is 1,1 then it means that it worked)
+        print(gdps.create_account("Hello_World","Password123456")) # Prints the response (If the response starts with '1' then it means that it worked. Otherwise if the response starts with '-2' is then that means that the account already exists)
         """
         url = f"{self.url}/accounts/registerGJAccount.php" 
         p = f"userName={username}&password={pw}&email=nah@nah.f"
